@@ -194,6 +194,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel6.setText("Lista de Processos");
 
+        textArea_listaProcessos.setEditable(false);
         textArea_listaProcessos.setColumns(20);
         textArea_listaProcessos.setRows(5);
         jScrollPane2.setViewportView(textArea_listaProcessos);
