@@ -14,7 +14,12 @@ public class EscalonadorControle {
         
     }
     
-    public Escalonador iniciarEscalonador(String qtdProcessos, String valorQuantum) throws RuntimeException{
+    public boolean estalonadorEstaEmExecucao(){
+        return this.escalonador instanceof Escalonador;
+    }
+    
+    public void iniciarEscalonador(String qtdProcessos, String valorQuantum) throws RuntimeException{
+        if(escalonador instanceof Escalonador) { return; }
         if(!isInteger(qtdProcessos)) throw new RuntimeException("Preencha corretamente o campo 'Processos por minuto'");
         if(!isInteger(valorQuantum)) throw new RuntimeException("Preencha corretamente o campo 'Quantum'");
 
@@ -36,8 +41,6 @@ public class EscalonadorControle {
                 }
             }  
         }.start();
-
-        return escalonador;
     }
     
     public void criarProcesso(String tempoVida) throws RuntimeException{

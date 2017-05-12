@@ -18,8 +18,9 @@ import javax.swing.JOptionPane;
  */
 public class Principal extends javax.swing.JFrame {
     
+    private ScheduledExecutorService threadListaProcessos;
+    private ScheduledExecutorService threadLogProcessos;
     private final EscalonadorControle controle;
-    private Escalonador escalonador;
     /**
      * Creates new form Principal
      */
@@ -238,26 +239,38 @@ public class Principal extends javax.swing.JFrame {
     
     private void btn_iniciarEscalonadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarEscalonadorActionPerformed
         try{
-            if(escalonador instanceof Escalonador) { return; }
-            escalonador = controle.iniciarEscalonador(
-                                textBox_qtdProcessos.getText(),
-                                textBox_valorQuantum.getText()
-                            );
-            
-            ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-            exec.scheduleAtFixedRate(() -> {
-                textArea_listaProcessos.setText(controle.listarProcessosEmExecucao());
-            }, 0, 100, TimeUnit.MILLISECONDS);
-            
-            exec.scheduleAtFixedRate(() -> {
-                textArea_logProcesso = controle.mostrarLogDeExecucao(textArea_logProcesso);
-            }, 0, 100, TimeUnit.MILLISECONDS);
+            if(controle.estalonadorEstaEmExecucao()) { return; }
+            controle.iniciarEscalonador(textBox_qtdProcessos.getText(),textBox_valorQuantum.getText());
 
+            bloquearCamposEscalonador();
+            atualizarListaDeProcessosPorTempo();
+            atualizarLogDeExecucaoPorTempo();
         }catch(RuntimeException e){
             JOptionPane.showMessageDialog(this,e.getMessage());
         }
     }//GEN-LAST:event_btn_iniciarEscalonadorActionPerformed
 
+    private void bloquearCamposEscalonador(){
+        this.textBox_qtdProcessos.setEnabled(false);
+        this.textBox_valorQuantum.setEnabled(false);
+        this.btn_iniciarEscalonador.setText("Parar Escalonador");
+    }
+    
+    private void atualizarListaDeProcessosPorTempo(){
+        threadListaProcessos = Executors.newSingleThreadScheduledExecutor();
+        threadListaProcessos.scheduleAtFixedRate(() -> {
+            textArea_listaProcessos.setText(controle.listarProcessosEmExecucao());
+        }, 0, 100, TimeUnit.MILLISECONDS);
+
+    }
+    
+    private void atualizarLogDeExecucaoPorTempo(){
+        threadLogProcessos = Executors.newSingleThreadScheduledExecutor();
+        threadLogProcessos.scheduleAtFixedRate(() -> {
+            textArea_logProcesso = controle.mostrarLogDeExecucao(textArea_logProcesso);
+        }, 0, 100, TimeUnit.MILLISECONDS);
+    }
+    
     private void textBox_valorQuantumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_valorQuantumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textBox_valorQuantumActionPerformed
