@@ -3,6 +3,7 @@ package controle;
 import dominio.Escalonador;
 import dominio.LogProcesso;
 import dominio.Processo;
+import dominio.TipoProcesso;
 import java.util.Iterator;
 import javax.swing.JTextArea;
 
@@ -43,12 +44,12 @@ public class EscalonadorControle {
         }.start();
     }
     
-    public void criarProcesso(String tempoVida) throws RuntimeException{
+    public void criarProcesso(String tempoVida, String tipo) throws RuntimeException{
         if(!isInteger(tempoVida)) throw new RuntimeException("Preencha corretamente o campo 'Tempo de vida'");
         if(Integer.parseInt(tempoVida) == 0) throw new RuntimeException("O tempo de vida do processo deve ser maior que zero");
         
         escalonador.criar(
-            new Processo(Integer.parseInt(tempoVida))
+            new Processo(Integer.parseInt(tempoVida), TipoProcesso.get(tipo))
         );
     }
     
@@ -56,14 +57,18 @@ public class EscalonadorControle {
         if(escalonador.possuiProcessos()){
             StringBuilder builder = new StringBuilder();
             
-            builder.append("PID").append("\t").append("Situação").append("\t").append("Tempo Restante");
+            builder.append("PID").append("\t")
+                    .append("Tipo").append("\t")
+                    .append("Situação").append("\t")
+                    .append("Tempo Restante");
             
             for (Iterator<Processo> iterator = escalonador.getProcessos().iterator(); iterator.hasNext();) {
                 Processo processo = iterator.next();
                 builder.append("\n")
-                        .append(processo.getId())
-                        .append("\t").append(processo.getSituacao().getDescricao())
-                        .append("\t").append(processo.getTempoRestante());
+                        .append(processo.getId()).append("\t")
+                        .append(processo.getTipo().getDescricao()).append("\t")
+                        .append(processo.getSituacao().getDescricao()).append("\t")
+                        .append(processo.getTempoRestante());
             }
             
             return builder.toString();

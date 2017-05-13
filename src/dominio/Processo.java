@@ -6,19 +6,25 @@ public class Processo{
     
     private Integer id;
     private Integer tempo;
+    private TipoProcesso tipo;
     private SituacaoProcesso situacao;
     
     private ArrayList<TimeSharingProcesso> timeSharing;
     
-    public Processo(Integer tempo){
+    public Processo(Integer tempo, TipoProcesso tipo){
         this.tempo = tempo;
         this.situacao = SituacaoProcesso.Pendente;
+        this.tipo = tipo;
     }
 
     public Integer getId(){
         return id;
     }
 
+    public TipoProcesso getTipo() {
+        return tipo;
+    }
+    
     public void setId(Integer id) {
         this.id = id;
     }

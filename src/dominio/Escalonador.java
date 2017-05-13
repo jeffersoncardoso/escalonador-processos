@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Escalonador {
@@ -10,7 +11,8 @@ public class Escalonador {
     private final Integer valorQuantum;
     
     private Integer countProcessosMinuto = 0;
-    private final CopyOnWriteArrayList<Processo> processos; //Esse tipo de lista permite remover elementos ao iterar
+    private final CopyOnWriteArrayList<Processo> processos; //Esse tipo de lista permite remover elementos ao iterar (thread safe)
+    private ArrayList<Processo> processosEmEspera; //Lista para processos IO-Bound
 
     public Escalonador(Integer numeroProcessosPorMinuto, Integer valorQuantum){
         this.numeroProcessosMaximoPorMinuto = numeroProcessosPorMinuto;
@@ -34,7 +36,11 @@ public class Escalonador {
     
     public void criar(Processo novoProcesso){
         if(numeroDeProcessosCriadosNoUltimoMinuto() < numeroProcessosMaximoPorMinuto){
-            criarNovoProcesso(novoProcesso);
+            if(novoProcesso.getTipo() == TipoProcesso.CPUBound){
+                criarNovoProcessoCPUBound(novoProcesso);
+            }else{
+                criarNovoProcessoIOBound(novoProcesso);
+            }
         }else{
             throw new RuntimeException("Número máximo de processos por mínuto excedido");
         }
@@ -44,11 +50,15 @@ public class Escalonador {
         return countProcessosMinuto;
     }
     
-    private void criarNovoProcesso(Processo novoProcesso){
+    private void criarNovoProcessoCPUBound(Processo novoProcesso){
         novoProcesso.setId(getIdNovoProcesso());
         processos.add(novoProcesso);
         novoProcesso.gerarTimeSharing(valorQuantum);
         countProcessosMinuto++;
+    }
+    
+    private void criarNovoProcessoIOBound(Processo novoProcesso){
+        this.processosEmEspera.add(novoProcesso);
     }
     
     private Integer getIdNovoProcesso(){

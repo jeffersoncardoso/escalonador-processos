@@ -225,7 +225,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btn_criarProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_criarProcessoActionPerformed
         try{
-            controle.criarProcesso(textBox_tempoVida.getText());
+            controle.criarProcesso(textBox_tempoVida.getText(),"C");
         }catch(RuntimeException e){
             JOptionPane.showMessageDialog(this,e.getMessage());
         }
