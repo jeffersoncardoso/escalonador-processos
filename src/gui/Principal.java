@@ -6,7 +6,7 @@
 package gui;
 
 import controle.EscalonadorControle;
-import dominio.Escalonador;
+import java.awt.Toolkit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,8 +27,9 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         controle = new EscalonadorControle();
         initComponents();
+        setLocation((Toolkit.getDefaultToolkit().getScreenSize().width  - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,8 +45,6 @@ public class Principal extends javax.swing.JFrame {
         textBox_valorQuantum = new javax.swing.JTextField();
         btn_iniciarEscalonador = new javax.swing.JButton();
         lbl_quantum = new javax.swing.JLabel();
-        lbl_nomeProcesso = new javax.swing.JLabel();
-        textBox_nomeProcesso = new javax.swing.JTextField();
         lbl_tempoVida = new javax.swing.JLabel();
         textBox_tempoVida = new javax.swing.JTextField();
         radio_tipoProcessoCPU = new javax.swing.JRadioButton();
@@ -60,6 +59,11 @@ public class Principal extends javax.swing.JFrame {
         textArea_listaProcessos = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(java.awt.SystemColor.activeCaption);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.SystemColor.activeCaption);
+        setLocationByPlatform(true);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -87,15 +91,6 @@ public class Principal extends javax.swing.JFrame {
 
         lbl_quantum.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbl_quantum.setText("Quantum:");
-
-        lbl_nomeProcesso.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbl_nomeProcesso.setText("Nome do Processo:");
-
-        textBox_nomeProcesso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textBox_nomeProcessoActionPerformed(evt);
-            }
-        });
 
         lbl_tempoVida.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbl_tempoVida.setText("Tempo de vida:");
@@ -134,7 +129,6 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btn_criarProcesso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(textBox_qtdProcessos)
                     .addComponent(textBox_tempoVida)
-                    .addComponent(textBox_nomeProcesso)
                     .addComponent(textBox_valorQuantum)
                     .addComponent(btn_iniciarEscalonador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -145,8 +139,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(radio_tipoProcessoCPU))
                             .addComponent(lbl_quantum, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_qtdProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_nomeProcesso))
+                            .addComponent(lbl_qtdProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -165,11 +158,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_iniciarEscalonador, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_nomeProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textBox_nomeProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_tempoVida, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textBox_tempoVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,7 +166,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radio_tipoProcessoIO)
                     .addComponent(radio_tipoProcessoCPU))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btn_criarProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -218,8 +207,8 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,10 +223,22 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textBox_nomeProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_nomeProcessoActionPerformed
+    private void btn_criarProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_criarProcessoActionPerformed
+        try{
+            controle.criarProcesso(textBox_tempoVida.getText());
+        }catch(RuntimeException e){
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+    }//GEN-LAST:event_btn_criarProcessoActionPerformed
+
+    private void radio_tipoProcessoCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_tipoProcessoCPUActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textBox_nomeProcessoActionPerformed
-    
+    }//GEN-LAST:event_radio_tipoProcessoCPUActionPerformed
+
+    private void textBox_tempoVidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_tempoVidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textBox_tempoVidaActionPerformed
+
     private void btn_iniciarEscalonadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarEscalonadorActionPerformed
         try{
             if(controle.estalonadorEstaEmExecucao()) { return; }
@@ -251,6 +252,14 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_iniciarEscalonadorActionPerformed
 
+    private void textBox_valorQuantumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_valorQuantumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textBox_valorQuantumActionPerformed
+
+    private void textBox_qtdProcessosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_qtdProcessosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textBox_qtdProcessosActionPerformed
+    
     private void bloquearCamposEscalonador(){
         this.textBox_qtdProcessos.setEnabled(false);
         this.textBox_valorQuantum.setEnabled(false);
@@ -272,30 +281,6 @@ public class Principal extends javax.swing.JFrame {
         }, 0, 100, TimeUnit.MILLISECONDS);
     }
     
-    private void textBox_valorQuantumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_valorQuantumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textBox_valorQuantumActionPerformed
-
-    private void textBox_qtdProcessosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_qtdProcessosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textBox_qtdProcessosActionPerformed
-
-    private void radio_tipoProcessoCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_tipoProcessoCPUActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radio_tipoProcessoCPUActionPerformed
-
-    private void btn_criarProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_criarProcessoActionPerformed
-        try{
-            controle.criarProcesso(textBox_tempoVida.getText());
-        }catch(RuntimeException e){
-            JOptionPane.showMessageDialog(this,e.getMessage());
-        }
-    }//GEN-LAST:event_btn_criarProcessoActionPerformed
-
-    private void textBox_tempoVidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBox_tempoVidaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textBox_tempoVidaActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -340,7 +325,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lbl_nomeProcesso;
     private javax.swing.JLabel lbl_qtdProcessos;
     private javax.swing.JLabel lbl_quantum;
     private javax.swing.JLabel lbl_tempoVida;
@@ -348,7 +332,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton radio_tipoProcessoIO;
     private javax.swing.JTextArea textArea_listaProcessos;
     private javax.swing.JTextArea textArea_logProcesso;
-    private javax.swing.JTextField textBox_nomeProcesso;
     private javax.swing.JTextField textBox_qtdProcessos;
     private javax.swing.JTextField textBox_tempoVida;
     private javax.swing.JTextField textBox_valorQuantum;
