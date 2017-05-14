@@ -77,6 +77,28 @@ public class EscalonadorControle {
         }
     }
     
+    public String listarProcessosEmEspera(){
+        if(escalonador.possuiProcessosEmEspera()){
+            StringBuilder builder = new StringBuilder();
+            
+            builder.append("PID").append("\t")
+                    .append("Tipo").append("\t")
+                    .append("Situação").append("\t");
+            
+            for (Iterator<Processo> iterator = escalonador.getProcessosEmEspera().iterator(); iterator.hasNext();) {
+                Processo processo = iterator.next();
+                builder.append("\n")
+                        .append(processo.getId()).append("\t")
+                        .append(processo.getTipo().getDescricao()).append("\t")
+                        .append(processo.getSituacao().getDescricao()).append("\t");
+            }
+            
+            return builder.toString();
+        }else{
+            return "Não possui processos em espera";
+        }
+    }
+    
     public JTextArea mostrarLogDeExecucao(JTextArea textArea_logProcesso){
         textArea_logProcesso.setText(LogProcesso.getLog());
         textArea_logProcesso.setCaretPosition(textArea_logProcesso.getText().length());

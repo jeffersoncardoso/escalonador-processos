@@ -1,6 +1,6 @@
 package dominio;
 
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Escalonador {
@@ -12,12 +12,13 @@ public class Escalonador {
     
     private Integer countProcessosMinuto = 0;
     private final CopyOnWriteArrayList<Processo> processos; //Esse tipo de lista permite remover elementos ao iterar (thread safe)
-    private ArrayList<Processo> processosEmEspera; //Lista para processos IO-Bound
+    private CopyOnWriteArrayList<Processo> processosEmEspera; //Lista para processos IO-Bound
 
     public Escalonador(Integer numeroProcessosPorMinuto, Integer valorQuantum){
         this.numeroProcessosMaximoPorMinuto = numeroProcessosPorMinuto;
         this.valorQuantum = valorQuantum;
         this.processos = new CopyOnWriteArrayList();
+        this.processosEmEspera = new CopyOnWriteArrayList();
         
         LogProcesso.log("Escalonador de processos iniciado");
     }
@@ -35,23 +36,23 @@ public class Escalonador {
     }
     
     public void criar(Processo novoProcesso){
-        if(numeroDeProcessosCriadosNoUltimoMinuto() < numeroProcessosMaximoPorMinuto){
+        novoProcesso.setId(getIdNovoProcesso());
+        if(numeroDeProcessosCriadosNaFila() < numeroProcessosMaximoPorMinuto){
             if(novoProcesso.getTipo() == TipoProcesso.CPUBound){
-                criarNovoProcessoCPUBound(novoProcesso);
+                criarNovoProcesso(novoProcesso);
             }else{
                 criarNovoProcessoIOBound(novoProcesso);
             }
         }else{
-            throw new RuntimeException("Número máximo de processos por mínuto excedido");
+            throw new RuntimeException("Número máximo de processos simultâneos excedido");
         }
     }
     
-    private Integer numeroDeProcessosCriadosNoUltimoMinuto(){
-        return countProcessosMinuto;
+    private Integer numeroDeProcessosCriadosNaFila(){
+        return processos.size() + processosEmEspera.size();
     }
     
-    private void criarNovoProcessoCPUBound(Processo novoProcesso){
-        novoProcesso.setId(getIdNovoProcesso());
+    private void criarNovoProcesso(Processo novoProcesso){
         processos.add(novoProcesso);
         novoProcesso.gerarTimeSharing(valorQuantum);
         countProcessosMinuto++;
@@ -59,6 +60,19 @@ public class Escalonador {
     
     private void criarNovoProcessoIOBound(Processo novoProcesso){
         this.processosEmEspera.add(novoProcesso);
+        
+        Random gerador = new Random();
+        novoProcesso.setTempoEspera(gerador.nextInt(10000));
+        
+        new Thread(){
+            public void run(){
+                try {
+                    Thread.sleep(novoProcesso.getTempoEspera());
+                    processosEmEspera.remove(novoProcesso);
+                    criarNovoProcesso(novoProcesso);
+                } catch (InterruptedException ex) {}
+            }  
+        }.start();
     }
     
     private Integer getIdNovoProcesso(){
@@ -87,6 +101,14 @@ public class Escalonador {
 
     public CopyOnWriteArrayList<Processo> getProcessos() {
         return processos;
+    }
+
+    public boolean possuiProcessosEmEspera() {
+        return !processosEmEspera.isEmpty();
+    }
+
+    public CopyOnWriteArrayList<Processo> getProcessosEmEspera() {
+        return processosEmEspera;
     }
     
     

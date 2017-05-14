@@ -39,6 +39,13 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox1 = new javax.swing.JCheckBox();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         lbl_qtdProcessos = new javax.swing.JLabel();
         textBox_qtdProcessos = new javax.swing.JTextField();
@@ -57,6 +64,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         textArea_listaProcessos = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        textArea_processosEspera = new javax.swing.JTextArea();
+
+        jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.SystemColor.activeCaption);
@@ -68,7 +80,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lbl_qtdProcessos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbl_qtdProcessos.setText("Processos por mínuto:");
+        lbl_qtdProcessos.setText("Nº de processos");
 
         textBox_qtdProcessos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,10 +102,10 @@ public class Principal extends javax.swing.JFrame {
         });
 
         lbl_quantum.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbl_quantum.setText("Quantum:");
+        lbl_quantum.setText("Quantum");
 
         lbl_tempoVida.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbl_tempoVida.setText("Tempo de vida:");
+        lbl_tempoVida.setText("Tempo de vida");
 
         textBox_tempoVida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +113,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(radio_tipoProcessoCPU);
         radio_tipoProcessoCPU.setSelected(true);
         radio_tipoProcessoCPU.setText("CPU-Bound");
         radio_tipoProcessoCPU.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +122,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(radio_tipoProcessoIO);
         radio_tipoProcessoIO.setText("IO-Bound");
+        radio_tipoProcessoIO.setActionCommand("I");
+        radio_tipoProcessoIO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio_tipoProcessoIOActionPerformed(evt);
+            }
+        });
 
         btn_criarProcesso.setText("Criar Processo");
         btn_criarProcesso.addActionListener(new java.awt.event.ActionListener() {
@@ -138,9 +158,9 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(radio_tipoProcessoIO)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(radio_tipoProcessoCPU))
-                            .addComponent(lbl_quantum, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_qtdProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(lbl_quantum, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lbl_qtdProcessos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -181,12 +201,21 @@ public class Principal extends javax.swing.JFrame {
         jLabel5.setText("Log de Execução");
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel6.setText("Lista de Processos");
+        jLabel6.setText("Processos na Fila");
 
         textArea_listaProcessos.setEditable(false);
         textArea_listaProcessos.setColumns(20);
         textArea_listaProcessos.setRows(5);
         jScrollPane2.setViewportView(textArea_listaProcessos);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel7.setText("Processos em Espera");
+
+        textArea_processosEspera.setColumns(20);
+        textArea_processosEspera.setRows(5);
+        textArea_processosEspera.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textArea_processosEspera.setEnabled(false);
+        jScrollPane4.setViewportView(textArea_processosEspera);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,19 +223,26 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jScrollPane4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -214,10 +250,14 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -225,11 +265,18 @@ public class Principal extends javax.swing.JFrame {
 
     private void btn_criarProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_criarProcessoActionPerformed
         try{
-            controle.criarProcesso(textBox_tempoVida.getText(),"C");
+            String tipo;
+            if(radio_tipoProcessoIO.isSelected()) tipo = "I";
+            else tipo = "C";
+            controle.criarProcesso(textBox_tempoVida.getText(),tipo);
         }catch(RuntimeException e){
             JOptionPane.showMessageDialog(this,e.getMessage());
         }
     }//GEN-LAST:event_btn_criarProcessoActionPerformed
+
+    private void radio_tipoProcessoIOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_tipoProcessoIOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radio_tipoProcessoIOActionPerformed
 
     private void radio_tipoProcessoCPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_tipoProcessoCPUActionPerformed
         // TODO add your handling code here:
@@ -246,6 +293,7 @@ public class Principal extends javax.swing.JFrame {
 
             bloquearCamposEscalonador();
             atualizarListaDeProcessosPorTempo();
+            atualizarListaDeProcessosEmEsperaPorTempo();
             atualizarLogDeExecucaoPorTempo();
         }catch(RuntimeException e){
             JOptionPane.showMessageDialog(this,e.getMessage());
@@ -278,6 +326,13 @@ public class Principal extends javax.swing.JFrame {
         threadLogProcessos = Executors.newSingleThreadScheduledExecutor();
         threadLogProcessos.scheduleAtFixedRate(() -> {
             textArea_logProcesso = controle.mostrarLogDeExecucao(textArea_logProcesso);
+        }, 0, 100, TimeUnit.MILLISECONDS);
+    }
+    
+    public void atualizarListaDeProcessosEmEsperaPorTempo(){
+        threadLogProcessos = Executors.newSingleThreadScheduledExecutor();
+        threadLogProcessos.scheduleAtFixedRate(() -> {
+            textArea_processosEspera.setText(controle.listarProcessosEmEspera());
         }, 0, 100, TimeUnit.MILLISECONDS);
     }
     
@@ -319,11 +374,20 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_criarProcesso;
     private javax.swing.JButton btn_iniciarEscalonador;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbl_qtdProcessos;
     private javax.swing.JLabel lbl_quantum;
@@ -332,6 +396,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton radio_tipoProcessoIO;
     private javax.swing.JTextArea textArea_listaProcessos;
     private javax.swing.JTextArea textArea_logProcesso;
+    private javax.swing.JTextArea textArea_processosEspera;
     private javax.swing.JTextField textBox_qtdProcessos;
     private javax.swing.JTextField textBox_tempoVida;
     private javax.swing.JTextField textBox_valorQuantum;

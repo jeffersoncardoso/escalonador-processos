@@ -8,6 +8,7 @@ public class Processo{
     private Integer tempo;
     private TipoProcesso tipo;
     private SituacaoProcesso situacao;
+    private Integer tempoEspera;
     
     private ArrayList<TimeSharingProcesso> timeSharing;
     
@@ -45,6 +46,14 @@ public class Processo{
         }
         
         return tempoRestante;
+    }
+    
+    public Integer getTempoEspera(){
+        return tempoEspera;
+    }
+    
+    public void setTempoEspera(Integer tempo){
+        tempoEspera = tempo;
     }
     
     public void iniciar(){
