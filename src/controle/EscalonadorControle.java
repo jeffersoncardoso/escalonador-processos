@@ -21,7 +21,7 @@ public class EscalonadorControle {
     
     public void iniciarEscalonador(String qtdProcessos, String valorQuantum) throws RuntimeException{
         if(escalonador instanceof Escalonador) { return; }
-        if(!isInteger(qtdProcessos)) throw new RuntimeException("Preencha corretamente o campo 'Processos por minuto'");
+        if(!isInteger(qtdProcessos)) throw new RuntimeException("Preencha corretamente o campo 'Nº máximo de processos'");
         if(!isInteger(valorQuantum)) throw new RuntimeException("Preencha corretamente o campo 'Quantum'");
 
         escalonador = new Escalonador(

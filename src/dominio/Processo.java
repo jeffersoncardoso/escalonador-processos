@@ -3,7 +3,6 @@ package dominio;
 import java.util.ArrayList;
 
 public class Processo{
-    
     private Integer id;
     private Integer tempo;
     private TipoProcesso tipo;

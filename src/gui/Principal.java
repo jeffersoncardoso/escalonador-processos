@@ -67,10 +67,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         textArea_processosEspera = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Simulador - Escalonador de Processos - Sistemas Operacionais");
         setBackground(java.awt.SystemColor.activeCaption);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(java.awt.SystemColor.activeCaption);
@@ -80,7 +82,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lbl_qtdProcessos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lbl_qtdProcessos.setText("Nº de processos");
+        lbl_qtdProcessos.setText("Nº máximo de processos");
 
         textBox_qtdProcessos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,6 +195,7 @@ public class Principal extends javax.swing.JFrame {
 
         textArea_logProcesso.setColumns(20);
         textArea_logProcesso.setRows(5);
+        textArea_logProcesso.setTabSize(6);
         textArea_logProcesso.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         textArea_logProcesso.setEnabled(false);
         jScrollPane3.setViewportView(textArea_logProcesso);
@@ -201,7 +204,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel5.setText("Log de Execução");
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel6.setText("Processos na Fila");
+        jLabel6.setText("Processos na Fila de Execução");
 
         textArea_listaProcessos.setEditable(false);
         textArea_listaProcessos.setColumns(20);
@@ -211,11 +214,14 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel7.setText("Processos em Espera");
 
+        textArea_processosEspera.setEditable(false);
         textArea_processosEspera.setColumns(20);
         textArea_processosEspera.setRows(5);
         textArea_processosEspera.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        textArea_processosEspera.setEnabled(false);
         jScrollPane4.setViewportView(textArea_processosEspera);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel1.setText("Desenvolvido por: Jefferson Cardoso, Guilherme Linden e Maiquel Ribeiro - Sistemas Operacionais - Universidade Feevale");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,17 +232,18 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                            .addComponent(jLabel7)
+                            .addComponent(jScrollPane4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jScrollPane4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1))
+                        .addGap(0, 52, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -256,9 +263,13 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(10, 10, 10))
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -311,7 +322,8 @@ public class Principal extends javax.swing.JFrame {
     private void bloquearCamposEscalonador(){
         this.textBox_qtdProcessos.setEnabled(false);
         this.textBox_valorQuantum.setEnabled(false);
-        this.btn_iniciarEscalonador.setText("Parar Escalonador");
+        this.btn_iniciarEscalonador.setText("Escalonador Iniciado");
+        this.btn_iniciarEscalonador.setEnabled(false);
     }
     
     private void atualizarListaDeProcessosPorTempo(){
@@ -381,6 +393,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

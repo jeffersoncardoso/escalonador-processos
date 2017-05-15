@@ -10,9 +10,8 @@ public class Escalonador {
     private final Integer numeroProcessosMaximoPorMinuto;
     private final Integer valorQuantum;
     
-    private Integer countProcessosMinuto = 0;
     private final CopyOnWriteArrayList<Processo> processos; //Esse tipo de lista permite remover elementos ao iterar (thread safe)
-    private CopyOnWriteArrayList<Processo> processosEmEspera; //Lista para processos IO-Bound
+    private final CopyOnWriteArrayList<Processo> processosEmEspera; //Lista para processos IO-Bound
 
     public Escalonador(Integer numeroProcessosPorMinuto, Integer valorQuantum){
         this.numeroProcessosMaximoPorMinuto = numeroProcessosPorMinuto;
@@ -55,7 +54,6 @@ public class Escalonador {
     private void criarNovoProcesso(Processo novoProcesso){
         processos.add(novoProcesso);
         novoProcesso.gerarTimeSharing(valorQuantum);
-        countProcessosMinuto++;
     }
     
     private void criarNovoProcessoIOBound(Processo novoProcesso){
