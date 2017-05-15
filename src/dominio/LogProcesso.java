@@ -1,6 +1,7 @@
 package dominio;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class LogProcesso{
     
@@ -17,8 +18,9 @@ public class LogProcesso{
         ultimaQuantidadeDeLog = log.size();
         
         StringBuilder builder = new StringBuilder();
+        
         for(String string : log) {
-            builder.append(string).append("\n");
+            builder.append("\n").append(string);
         }
         
         return builder.toString();

@@ -60,7 +60,7 @@ public class EscalonadorControle {
             builder.append("PID").append("\t")
                     .append("Tipo").append("\t")
                     .append("Situação").append("\t")
-                    .append("Tempo Restante");
+                    .append("Restante");
             
             for (Iterator<Processo> iterator = escalonador.getProcessos().iterator(); iterator.hasNext();) {
                 Processo processo = iterator.next();

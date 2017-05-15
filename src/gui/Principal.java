@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import controle.EscalonadorControle;
@@ -193,11 +188,11 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        textArea_logProcesso.setEditable(false);
         textArea_logProcesso.setColumns(20);
         textArea_logProcesso.setRows(5);
         textArea_logProcesso.setTabSize(6);
         textArea_logProcesso.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        textArea_logProcesso.setEnabled(false);
         jScrollPane3.setViewportView(textArea_logProcesso);
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
