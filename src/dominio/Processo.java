@@ -55,14 +55,6 @@ public class Processo{
         tempoEspera = tempo;
     }
     
-    public void iniciar(){
-        this.situacao = SituacaoProcesso.Executando;
-    }
-    
-    public void parar(){
-        this.situacao = SituacaoProcesso.Aguardando;
-    }
-    
     public void encerrar(){
         this.situacao = SituacaoProcesso.Pronto;
     }
