@@ -56,17 +56,17 @@ public class Escalonador {
         novoProcesso.gerarTimeSharing(valorQuantum);
     }
     
-    private void criarNovoProcessoIOBound(Processo novoProcesso){
-        this.processosEmEspera.add(novoProcesso);
+    private void criarNovoProcessoIOBound(Processo novoProcesso){ 
+        this.processosEmEspera.add(novoProcesso); //Adiciono processo em uma lista de espera
         
-        Random gerador = new Random();
-        novoProcesso.setTempoEspera(gerador.nextInt(10000));
+        Random gerador = new Random(); //Instancio gerador de números aleatórios
+        novoProcesso.setTempoEspera(gerador.nextInt(10000)); //Gero um tempo de espera aleatório para o processo
         
-        new Thread(){
-            public void run(){
+        new Thread(){ //Processo entrará na fila de execução após transcorrido o tempo de espera
+            public void run(){ //Thread para executar em stand-by
                 try {
-                    Thread.sleep(novoProcesso.getTempoEspera());
-                    processosEmEspera.remove(novoProcesso);
+                    Thread.sleep(novoProcesso.getTempoEspera()); //Aguardo o tempo de espera definido 
+                    processosEmEspera.remove(novoProcesso); 
                     criarNovoProcesso(novoProcesso);
                 } catch (InterruptedException ex) {}
             }  
