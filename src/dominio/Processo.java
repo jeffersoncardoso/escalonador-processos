@@ -41,7 +41,12 @@ public class Processo{
         Integer tempoRestante = 0;
         
         for(TimeSharingProcesso thread : timeSharing) {
-            tempoRestante += thread.getQuantum();
+            if(tempo < thread.getQuantum()){
+                tempoRestante = tempo;
+                break;
+            }else{
+                tempoRestante += thread.getQuantum();
+            }
         }
         
         return tempoRestante;
@@ -83,11 +88,12 @@ public class Processo{
         if(this.timeSharing == null) throw new RuntimeException();
         if(this.estaConcluido()) return;
 
-        this.situacao = SituacaoProcesso.Executando;
-        this.timeSharing.get(0).executar();
-        this.timeSharing.remove(0);
-        this.situacao = SituacaoProcesso.Aguardando;
+        this.situacao = SituacaoProcesso.Executando; //Ao iniciar a execução mudo o status para 'Executando'
+        
+        this.timeSharing.get(0).executar(); //Executo a thread
+        this.timeSharing.remove(0); //Removo thread já executada da lista
+        this.situacao = SituacaoProcesso.Aguardando; //Altero o status para Aguardando(Será executado na próxima iteração da fila)
 
-        if(this.timeSharing.isEmpty()) this.encerrar();
+        if(this.timeSharing.isEmpty()) this.encerrar(); //Quando a lista está vazia, todas as threads foram executadas   
     }
 }
