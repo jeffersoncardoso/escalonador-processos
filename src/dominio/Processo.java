@@ -75,7 +75,7 @@ public class Processo{
         Integer quantidadeExecucoes = calcularQuantidadeDeExecucoes(quantum);
         
         for (int i = 0; i < quantidadeExecucoes; i++){
-            this.timeSharing.add(new TimeSharingProcesso(this.id, i+1,quantidadeExecucoes,quantum));
+            this.timeSharing.add(new TimeSharingProcesso(this, i+1,quantidadeExecucoes,quantum));
         }
     }
     
