@@ -79,12 +79,14 @@ public class Principal extends javax.swing.JFrame {
         lbl_qtdProcessos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbl_qtdProcessos.setText("Nº máximo de processos");
 
+        textBox_qtdProcessos.setText("100");
         textBox_qtdProcessos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textBox_qtdProcessosActionPerformed(evt);
             }
         });
 
+        textBox_valorQuantum.setText("1");
         textBox_valorQuantum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textBox_valorQuantumActionPerformed(evt);
