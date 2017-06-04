@@ -45,6 +45,7 @@ public class EscalonadorControle {
     }
     
     public void criarProcesso(String tempoVida, String tipo) throws RuntimeException{
+        if(!(escalonador instanceof Escalonador)) throw new RuntimeException("O escalonador de processos ainda não foi iniciado");
         if(!isInteger(tempoVida)) throw new RuntimeException("Preencha corretamente o campo 'Tempo de vida'");
         if(Integer.parseInt(tempoVida) == 0) throw new RuntimeException("O tempo de vida do processo deve ser maior que zero");
         
