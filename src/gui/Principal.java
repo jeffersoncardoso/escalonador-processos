@@ -274,8 +274,8 @@ public class Principal extends javax.swing.JFrame {
     private void btn_criarProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_criarProcessoActionPerformed
         try{
             String tipo;
-            if(radio_tipoProcessoIO.isSelected()) tipo = "I";
-            else tipo = "C";
+            tipo = (radio_tipoProcessoIO.isSelected()) ? "I" : "C";
+            
             controle.criarProcesso(textBox_tempoVida.getText(),tipo);
         }catch(RuntimeException e){
             JOptionPane.showMessageDialog(this,e.getMessage());
