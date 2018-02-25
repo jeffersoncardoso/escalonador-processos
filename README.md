@@ -12,7 +12,7 @@
 # Arquitetura do Sistema
 - Utilizei alguns conceitos de DDD (Domain Driven Design) para criação da estrutura de pastas, portanto dividi o código da seguinte forma:
 
-> Dominio - Toda lógica de negocio se encontra aqui (entidades como Processo, Escalonador, Situacao, etc.)
-> GUI - Interface do usuário (foi utilizado o Swing para criação das telas)
-> Controle - Integração entre classes de Dominio e GUI, como no MVC
+> - Dominio - Toda lógica de negocio se encontra aqui (entidades como Processo, Escalonador, Situacao, etc.)
+> - GUI - Interface do usuário (foi utilizado o Swing para criação das telas)
+> - Controle - Integração entre classes de Dominio e GUI, como no MVC
 
